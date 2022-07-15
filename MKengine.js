@@ -8,7 +8,7 @@ let filename ="database.json"
 
 const patternArray = ["[a-zA-Z]* is (object|property|system)","[a-zA-Z]* is (object|property|system)[?]"] //Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
 
-const patternOperatorArray = ["[a-zA-Z]* is (object|property|system)"];
+const patternOperatorArray = ["[a-zA-Z]* is (object|property|system)?![?]"];
 
 
 import fs from 'fs'
@@ -19,16 +19,17 @@ function MKparserv1(expression){
 }
 
 function MKvalidatorV1(expression){
-let pattern = /[a-zA-Z]* is (object|property|sytem|)/;
+let pattern = /[a-zA-Z]* is (object|property|system)/;
 return pattern.test(expression)
 
 }
 
 function MKvalidatorV2(expression,patternArray){
-let flag = false;
+let flag = false; //La expression no se encuentra en la base de datos
 patternArray.forEach(pattern => {
     if(new RegExp(pattern, "").test(expression)){
         flag = true
+        console.log("Se mete en el forEach")
     }
 })
 return flag;
@@ -53,7 +54,7 @@ database.forEach(item => {
         flag = true;
     }
 })
-return term;
+return flag;
 }
 
 function checkExpressionInDatabase(term,expression,database){
@@ -78,9 +79,11 @@ function insertNewTermIntoDatabase(term,expression,database){
 function insertNewExpressionIntoDatabase(term,expression,database){
     database.forEach(item => {
         if( item.term === term){
+           
             item.expression.push(expression)
         }
     })
+   
 }
 
 
@@ -93,11 +96,15 @@ function databaseFeedV1(expression,patternArray,patternOperatorArray,database){
         term = extractTerm(expression,patternOperatorArray)
         console.log(`the value of term is ${term}`)
        if (!checkTermInDatabase(term,database)){ //Si el término NO se encuentra en la base de datos la introducimos en la base de datos junto con su expression
-          insertNewTermIntoDatabase(term,expression,database)
+         console.log(`The term ${term} is not in the database`) 
+         insertNewTermIntoDatabase(term,expression,database)
+         console.log(`The term ${term} was added to the database`) 
+
        }else if(checkTermInDatabase(term,database)){//Si el término SI se encuentra en la base de datos comprobamos si la expression se encuentra en la base de datos
+        console.log(`The term \"${term}\" si se encuentra en la base de datos`)
         if(!checkExpressionInDatabase(term,expression,database)){//Si la expression NO se encuentra en la base de datos, la escribimos
             insertNewExpressionIntoDatabase(term,expression,database)
-            console.log(`La expression ${expression} del término ${term} se añadió a la base de datos`)
+            console.log(`La expression \"${expression}\" del término ${term} se añadió a la base de datos`)
         } else {
             console.log(`La información de la sentencia ${expression} ya se encuentra en la base de datos`)
         }
@@ -135,7 +142,6 @@ return database;
 async function main(expression){
     database = await loadDatabase(filename);
     console.log(`La expresion es: ${expression}`)
-    console.log(testRegex())
    // console.log(MKvalidatorV2(expression,patternOperatorArray))
     database = await databaseFeedV1(expression,patternArray,patternOperatorArray,database)
     saveDatabase(filename,database) 

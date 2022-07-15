@@ -1,35 +1,26 @@
 'use strict'
 
-//import { main } from './MKengine.js'
+import { main } from './MKengine.js'
 
-/* let stdin;
-
-async function readKeyboard(){
-console.log("Escribe una sentencia");
-
-stdin = process.openStdin();
-
-stdin.addListener("data", function(d) {
-     console.log(d)
-  });
+async function cli(){
+recursiveTyped();
 }
 
-readKeyboard(); */
-function cli(){
-  let stdin
-  console.log("Escribe una sentencia chulísima 3");
-
-  stdin = process.openStdin();
-  
-  stdin.addListener("data", function(d) {
-       console.log(d)
-       if(d!="exit"){
-       cli();
-       }else{
-        console.log("saliste del programa")
-       }
-    });
+async function recursiveTyped(){
+  console.log("Escribe una sentencia")
+  process.stdin.once('data', async(data) => {
+  //console.log(`You typed ${data.toString()}`);
+  if(data.toString().trim()!=="exit"){
+ await main(data.toString().trim())
+ recursiveTyped();
+  }else{
+  process.exit();
   }
+  })
+ 
+}
 
 
+
+//Main program
 cli();
