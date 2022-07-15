@@ -2,16 +2,16 @@
 
 let database = {};
 
-let expression = "car is egg";
+let expression = "car is system";
 
 let filename ="database.json"
 
-const patternArray = ["[a-zA-Z]* is (object|property|sytem|)","[a-zA-Z]* is (object|property|sytem|)[?]"] //Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
+const patternArray = ["[a-zA-Z]* is (object|property|system)","[a-zA-Z]* is (object|property|system)[?]"] //Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
 
-const patternOperatorArray = ["[a-zA-Z]* is (object|property|sytem)"];
+const patternOperatorArray = ["[a-zA-Z]* is (object|property|system)"];
 
 
-const fs = require('fs');
+import fs from 'fs'
 
 
 function MKparserv1(expression){
@@ -27,7 +27,7 @@ return pattern.test(expression)
 function MKvalidatorV2(expression,patternArray){
 let flag = false;
 patternArray.forEach(pattern => {
-    if(new RegExp(pattern, "").match(expression)){
+    if(new RegExp(pattern, "").test(expression)){
         flag = true
     }
 })
@@ -132,14 +132,16 @@ catch(err){
 return database;
 }
 
-async function main(){
+async function main(expression){
     database = await loadDatabase(filename);
     console.log(`La expresion es: ${expression}`)
     console.log(testRegex())
    // console.log(MKvalidatorV2(expression,patternOperatorArray))
- /*    database = await databaseFeedV1(expression,patternArray,patternOperatorArray,database)
-    saveDatabase(filename,database) */
+    database = await databaseFeedV1(expression,patternArray,patternOperatorArray,database)
+    saveDatabase(filename,database) 
 }
 
 
-main();
+
+
+export {main};

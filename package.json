@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "description": "An engine for model K lenguaje",
   "main": "MKengine.js",
+  "type": "module",
   "scripts": {
     "test": "test"
   },
   "author": "Guillermo BALDÁN LÓPEZ",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.19"
+  }
 }
