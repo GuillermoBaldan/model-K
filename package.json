@@ -1,0 +1,11 @@
+{
+  "name": "model-k",
+  "version": "1.0.0",
+  "description": "An engine for model K lenguaje",
+  "main": "MKengine.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Guillermo BALDÁN LÓPEZ",
+  "license": "ISC"
+}
