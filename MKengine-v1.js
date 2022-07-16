@@ -44,7 +44,6 @@ function testRegex(){
 
 function extractTerm(expression,patternArray){
     const term = expression.split(" ")[0];
-    console.log(term)
    return term;
 }
 
@@ -162,13 +161,17 @@ async function loadDatabaseFrom(completepath){
 function MKengineV1(expression,patternArray,patternOperatorArray,patternQueryArray,database){
 //1) Validar expresión
     if(MKvalidatorV2(expression,patternArray)){
+        console.log("MKvalidatorV2 result:")
+        console.log(MKvalidatorV2(expression,patternArray))
     //2) Diferenciar entre una expresión de input o question
     if(inputOrQuestion(expression,patternOperatorArray,patternQueryArray)){
         //3.A) Si es una expresión de input usar databaseFeedV1
         databaseFeedV1(expression,patternArray,patternOperatorArray,database)
     }else{
         //3.B) Si es una expresión de question usar Kbrain
-        Kbrain(expression,patternQueryArray,database)
+       return Kbrain(expression,patternQueryArray,database)
+        console.log("Kbrain result:")
+        console.log(typeof(Kbrain(expression,patternQueryArray,database)))
     }
     
    
@@ -187,8 +190,8 @@ function inputOrQuestion(expression,patternOperatorArray,patternQueryArray){
 
 function Kbrain(expression,patternQueryArray,database){
     const term = extractTerm(expression,patternArray)
-    console.log(database)
-   console.log(checkExpressionInDatabase(term,expression,database))
+   console.log(database)
+    return checkExpressionInDatabase(term,expression,database)
 }
 
 async function mainv1_1(expression){
@@ -209,4 +212,4 @@ async function mainv1_2(expression){
 
 
 
-module.exports = {mainv1_1,mainv1_2};
+module.exports = {mainv1_1,mainv1_2,MKengineV1};
