@@ -3,8 +3,7 @@ function MKvalidatorV2(expression,patternArray){
     patternArray.forEach(pattern => {
         if(new RegExp(pattern, "").test(expression)){
             flag = true
-            console.log("Se mete en el forEach")
-        }
+          }
     })
     return flag;
     }

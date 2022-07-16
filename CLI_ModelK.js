@@ -1,6 +1,6 @@
 'use strict'
 
-import { main } from './MKengine.js'
+import { main } from './MKengine-v1.js'
 
 async function cli(){
 recursiveTyped();

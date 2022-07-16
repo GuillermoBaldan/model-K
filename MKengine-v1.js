@@ -6,10 +6,11 @@ let expression = "car is system";
 
 let filename ="database.json"
 
-const patternArray = ["[a-zA-Z]* is (object|property|system)","[a-zA-Z]* is (object|property|system)[?]"] //Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
+const patternArray = ["[a-zA-Z]* is (object|property|system)(?![?])","[a-zA-Z]* is (object|property|system)[?]"] //Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
 
-const patternOperatorArray = ["[a-zA-Z]* is (object|property|system)?![?]"];
+const patternOperatorArray = ["[a-zA-Z]* is (object|property|system)(?![?])"];
 
+//const patternQueryArray
 
 import fs from 'fs'
 
@@ -29,7 +30,6 @@ let flag = false; //La expression no se encuentra en la base de datos
 patternArray.forEach(pattern => {
     if(new RegExp(pattern, "").test(expression)){
         flag = true
-        console.log("Se mete en el forEach")
     }
 })
 return flag;
@@ -111,7 +111,7 @@ function databaseFeedV1(expression,patternArray,patternOperatorArray,database){
        }    
 
     }else{
-      console.log(`La expression ${expression} no es válida`)
+      console.log(`The expression ${expression} is not valid`)
     }
     return database;
 }
@@ -137,6 +137,37 @@ catch(err){
     console.log(err)
 }
 return database;
+}
+
+function MKengineV1(expression,patternArray,patternOperatorArray,patternQueryArray,database){
+//1) Validar expresión
+    if(MKvalidatorV2(expression,patternArray)){
+    //2) Diferenciar entre una expresión de input o question
+    if(inputOrQuestion(expression,patternOperatorArray,patternQueryArray)){
+        //3.A) Si es una expresión de input usar databaseFeedV1
+        databaseFeedV1(expression,patternArray,patternOperatorArray,database)
+    }else{
+        //3.B) Si es una expresión de question usar Kbrain
+        Kbrain(expression,patternQueryArray,database)
+    }
+    
+   
+    }
+}
+
+function inputOrQuestion(expression,patternOperatorArray,patternQueryArray){
+    let flag = false //Se asume que es una question
+    if (MKvalidatorV2(expression,patternOperatorArray)){
+        //Si se valida la expression respecto al patternOperatorArray se devuelve true
+        flag = true;
+    }
+
+    return flag
+}
+
+function Kbrain(expression,patternQueryArray,database){
+    const term = extractTerm(expression,patternArray)
+   checkExpressionInDatabase(term,expression,database)
 }
 
 async function main(expression){
