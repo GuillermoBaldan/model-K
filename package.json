@@ -5,8 +5,8 @@
   "main": "MKengine.js",
   "type": "module",
   "scripts": {
-    "test": "test",
-    "dev" : "nodemon .\\CLI_ModelK.js"
+    "test": "node_modules/.bin/jest",
+    "dev": "nodemon .\\CLI_ModelK.js"
   },
   "author": "Guillermo BALDÁN LÓPEZ",
   "license": "ISC",
@@ -15,5 +15,8 @@
   },
   "dependencies": {
     "nodemon": "^2.0.19"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
   }
 }
