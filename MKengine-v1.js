@@ -6,13 +6,14 @@ let expression = "car is system";
 
 let filename ="database.json"
 
-const patternArray = ["[a-zA-Z]* is (object|property|system)(?![?])","[a-zA-Z]* is (object|property|system)[?]"] //Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
-
 const patternOperatorArray = ["[a-zA-Z]* is (object|property|system)(?![?])"];
 
-//const patternQueryArray
+const patternQueryArray = ["[a-zA-Z]* is (object|property|system)[?]"];
 
-import fs from 'fs'
+const patternArray = [...patternOperatorArray, ...patternQueryArray]//Contiene el formato de todas las posibles expresiones que admite el motor como sentencias de código.
+
+
+const fs = require('fs')
 
 
 function MKparserv1(expression){
@@ -59,6 +60,7 @@ return flag;
 
 function checkExpressionInDatabase(term,expression,database){
     let flag = false //La expression no se encuentra en la base de datos.
+    expression = expression.replace("?","");
     database.forEach(item => {
         if (item.term === term){
             item.expression.forEach(itemExpression =>{
@@ -139,6 +141,24 @@ catch(err){
 return database;
 }
 
+async function loadDatabaseFrom(completepath){
+    let data;
+    let database;
+    let path = completepath
+    try {
+    /* data = await fs.readFileSync(path, 'utf-8')
+    const database = JSON.parse(data)
+    
+    } */
+    let rawdata = fs.readFileSync(path);
+    database = JSON.parse(rawdata);
+    }
+    catch(err){
+        console.log(err)
+    }
+    return database;
+    }
+
 function MKengineV1(expression,patternArray,patternOperatorArray,patternQueryArray,database){
 //1) Validar expresión
     if(MKvalidatorV2(expression,patternArray)){
@@ -167,10 +187,11 @@ function inputOrQuestion(expression,patternOperatorArray,patternQueryArray){
 
 function Kbrain(expression,patternQueryArray,database){
     const term = extractTerm(expression,patternArray)
-   checkExpressionInDatabase(term,expression,database)
+    console.log(database)
+   console.log(checkExpressionInDatabase(term,expression,database))
 }
 
-async function main(expression){
+async function mainv1_1(expression){
     database = await loadDatabase(filename);
     console.log(`La expresion es: ${expression}`)
    // console.log(MKvalidatorV2(expression,patternOperatorArray))
@@ -178,7 +199,14 @@ async function main(expression){
     saveDatabase(filename,database) 
 }
 
+async function mainv1_2(expression){
+    database = await loadDatabase(filename);
+    await MKengineV1(expression,patternArray,patternOperatorArray,patternQueryArray,database)
+    saveDatabase(filename,database) 
+}
 
 
 
-export {main};
+
+
+module.exports = {mainv1_1,mainv1_2};

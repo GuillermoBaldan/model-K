@@ -1,6 +1,7 @@
 'use strict'
 
-import { main } from './MKengine-v1.js'
+//import { mainv1_1,mainv1_2 } from './MKengine-v1.js' 
+const MKengineV1 = require('./MKengine-v1')
 
 async function cli(){
 recursiveTyped();
@@ -11,7 +12,7 @@ async function recursiveTyped(){
   process.stdin.once('data', async(data) => {
   //console.log(`You typed ${data.toString()}`);
   if(data.toString().trim()!=="exit"){
- await main(data.toString().trim())
+ await MKengineV1.mainv1_2(data.toString().trim())
  recursiveTyped();
   }else{
   process.exit();

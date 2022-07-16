@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "An engine for model K lenguaje",
   "main": "MKengine.js",
-  "type": "module",
-  "scripts": {
+    "scripts": {
     "test": "node_modules/.bin/jest",
     "dev": "nodemon .\\CLI_ModelK.js"
   },
