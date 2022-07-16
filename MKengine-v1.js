@@ -28,12 +28,19 @@ return pattern.test(expression)
 
 function MKvalidatorV2(expression,patternArray){
 let flag = false; //La expression no se encuentra en la base de datos
+let message;
 patternArray.forEach(pattern => {
     if(new RegExp(pattern, "").test(expression)){
         flag = true
     }
 })
-return flag;
+
+if(flag){
+    message = `La expressión introducida, "${expression}", es válida`
+} else{
+    message = `La expressión introducida, "${expression}", NO es válida`
+}
+return [flag,message];
 }
 
 function testRegex(){
@@ -95,8 +102,7 @@ function databaseFeedV1(expression,patternArray,patternOperatorArray,database){
     //Primero válidamos
     if ( MKvalidatorV2(expression,patternOperatorArray)){ //Si la expression es válida comprobamos que el término se encuentra en la base de datos
         term = extractTerm(expression,patternOperatorArray)
-        console.log(`the value of term is ${term}`)
-       if (!checkTermInDatabase(term,database)){ //Si el término NO se encuentra en la base de datos la introducimos en la base de datos junto con su expression
+         if (!checkTermInDatabase(term,database)){ //Si el término NO se encuentra en la base de datos la introducimos en la base de datos junto con su expression
          console.log(`The term ${term} is not in the database`) 
          insertNewTermIntoDatabase(term,expression,database)
          console.log(`The term ${term} was added to the database`) 
