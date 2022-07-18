@@ -1,13 +1,13 @@
 
 //Funciones
-const MKvalidatorV2 = require('./MKvalidatorV2');
-const extractTerm = require('./extractTerm')
-const checkExpressionInDatabase = require('./checkExpressionInDatabase')
-const loadDatabaseFrom = require('./loadDatabaseFrom')
+const { MKvalidatorV2 }  = require('../../MKengine-v1')
+const { extractTerm } = require('../../MKengine-v1')
+const { checkExpressionInDatabase } = require('../../MKengine-v1')
+const { loadDatabaseFrom } = require('../../MKengine-v1')
 
 //Constantes
-const patternOperatorArray = require('./patternOperatorArray')
-const patternArray = require('./patternArray')
+const { patternOperatorArray } = require('../../MKengine-v1')
+const { patternArray } = require('../../MKengine-v1')
 let databaseTest1 = loadDatabaseFrom("./tests/unit-testing/database.test.json");
 
 const awaitObjectWithPromise = async(obj) => {
@@ -39,7 +39,7 @@ test('V1T2) Module: MKvalidatorV2 -  Al evaluar la expressión \"car is object\"
  expect(MKvalidatorV2("car is object",patternArray)).toBe(true)
 })
 
-test('V1T3) Module: MKvalidatorV2 -  When evaluating the expression, \"car is object\" and using the \"patternOperatorArray\" it returns \"true\" because it is well constructed', () =>{
+test('V1T3) odule: MKvalidatorV2 -  When evaluating the expression, \"car is object\" and using the \"patternOperatorArray\" it returns \"true\" because it is well constructed', () =>{
     console.log(patternOperatorArray[0])
     expect(MKvalidatorV2("car is object",patternOperatorArray)).toBe(true)
    })

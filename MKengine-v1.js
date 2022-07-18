@@ -218,4 +218,7 @@ async function mainv1_2(expression){
 
 
 
-module.exports = {mainv1_1,mainv1_2,MKengineV1};
+module.exports = {mainv1_1,mainv1_2,MKengineV1, 
+extractTerm, checkExpressionInDatabase, MKvalidatorV2,
+patternOperatorArray, patternArray, patternQueryArray,
+loadDatabaseFrom };
