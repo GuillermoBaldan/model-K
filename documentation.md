@@ -9,6 +9,7 @@
 | Term | Description |
 |------|-------------|
 |KDL|(Knowledge Description Languaje) is a language superset that integrates all the different language modules|
+|Notion| It´s a semantic aspect that is shared by several concenpts. For instance, the notion of time is shared by the concepts of date, event or cicle|
 
 ## Scope of Versions
 ### Version 1
@@ -54,5 +55,35 @@ In version 5 of the K model, the verb "place in" is introduced together with the
 ### Version 6
 ####Brief description of what's new in version 6
 In version 6 the "How far" query operator is introduced. Its syntax is as follows "How far <[object,place]> from <place>". It allows calculating distances between places and between objects that have previously been located in a place, and between places and objects.
+
+### Version 7
+####Brief description of what's new in version 7
+One of the most important features is introduced in this version, the expression parser, MKparser. This allows you to customize the Model K language. This allows you to create syntactic sugar so that each person can develop their own code expressions, in addition to making text mining possible.
+The concept of "expression" is also introduced, which has an associated verb called "equivalentTo". In this version you can create "parsing functions" to do text mining or customize the model K language. You can also use the "in-label-language" operator that allows groups of expressions to be grouped as if they were languages. "label-language" is used together with "equivalentTo". Example of expression: "Estoy bien" equivalentTo "I´m fine" in English label language.
+
+### Version 8
+####Brief description of what's new in version 8
+In this version 8, the notion of time is introduced throught several concepts:
+* event
+* date
+* cycle
+* secuence
+* duration
+The events have a beginning and an end, as a beginning they can have an event or a date and as an end they can have another event and/or another date. Optionally, the verb "place in" can be used to place events in a place. The concept of **temporary knowledge** is also introduced, in this way an expression can be valid at an instant, or begin to be valid from a certain date.
+The concept of **eventual knowledge** is also introduced. An expression can be valid from an event that does not have to be located on a specific date. It can be valid before the event, after the event or during the event.
+
+### Version 9
+####Brief description of what's new in version 9
+In this version the notion of **fuzzy knowledge** is introduced. There is  a certain probability of a sentence, in addition the pseudo operator "not" is introduced. The probability of a sentence can be quantified numerically or expressed in a fuzzy way with the pseudo-perators allways, normally, often, usually and never.
+
+### Version 10
+####Brief description of what's new in version 10
+In this version, the multiple assignment operator is introduced, which is ",". Usage example:
+motorbike, car, plane is object.
+This statement is equivalent to three statements:
+* motorbike is object
+* car is object
+* plane is object
+This operator has to work with all verbs
 
 https://markdownlivepreview.com/
